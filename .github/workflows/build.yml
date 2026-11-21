@@ -1,0 +1,71 @@
+name: build
+
+# Builds the payload on every push. Pushing a vX.Y tag publishes a Release with
+# titan_trophy_fix_vX.Y.elf attached (the format Prospero Manager reads).
+# Release text: .github/release-notes/<tag>.md (falls back to a generic text).
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang/lld 18
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends clang-18 lld-18 llvm-18
+
+      - name: Download ps5-payload-sdk v0.45
+        run: |
+          wget -q -O sdk.zip https://github.com/ps5-payload-dev/sdk/releases/download/v0.45/ps5-payload-sdk.zip
+          echo "5fac64093d0e3e69f2584ce7935f24f703f622d9681f1495c85b9f00d1291a2c  sdk.zip" | sha256sum -c
+          sudo unzip -q -d /opt sdk.zip
+
+      - name: Build
+        env:
+          PS5_PAYLOAD_SDK: /opt/ps5-payload-sdk
+          LLVM_CONFIG: /usr/bin/llvm-config-18
+        run: |
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then VER="${GITHUB_REF_NAME#v}"; else VER="dev-${GITHUB_SHA::7}"; fi
+          make VERSION="$VER"
+          for f in titan_trophy_fix_v*.elf; do sha256sum "$f" | tee "$f.sha256"; done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: titan_trophy_fix
+          path: |
+            titan_trophy_fix_v*.elf
+            titan_trophy_fix_v*.elf.sha256
+
+      - name: Release notes
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          NOTES=".github/release-notes/${GITHUB_REF_NAME}.md"
+          if [ -f "$NOTES" ]; then cp "$NOTES" release-notes.md
+          else echo "TITAN Trophy Fix ${GITHUB_REF_NAME}" > release-notes.md; fi
+          {
+            echo
+            echo "**SHA-256**"
+            echo '```'
+            cat titan_trophy_fix_v*.elf.sha256
+            echo '```'
+          } >> release-notes.md
+
+      - name: Publish Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: TITAN Trophy Fix ${{ github.ref_name }}
+          body_path: release-notes.md
+          files: |
+            titan_trophy_fix_v*.elf
+            titan_trophy_fix_v*.elf.sha256

@@ -40,9 +40,19 @@ It needs no keys and does not modify TITAN or the PKG.
 
 Run it again **every time you install a game with TITAN**. A forced cache rebuild in TITAN keeps the copied files. If a game's cache is recreated from scratch (for example, if the folder is deleted), just run the payload again.
 
+#### PS5 Payload Manager
+
+In **Settings → Manage Sources → Add Source**, add:
+
+```
+https://raw.githubusercontent.com/tarcizu/titan-trophy-fix/main/payloads.json
+```
+
+The payload then shows up in the catalog with its icon and can be installed and updated from there.
+
 #### Prospero Manager
 
-Under **Payloads → Catalog**, add the source `https://github.com/tarcizu/titan-trophy-fix`. Prospero Manager lists the versions published under [Releases](https://github.com/tarcizu/titan-trophy-fix/releases) and downloads the `.elf` straight to the console.
+Under **Payload Repositories → Add repository**, add `https://github.com/tarcizu/titan-trophy-fix`. Prospero Manager lists the versions published under [Releases](https://github.com/tarcizu/titan-trophy-fix/releases) and downloads the `.elf` straight to the console.
 
 ### Building
 
@@ -102,9 +112,19 @@ Ele não usa nenhuma chave e não altera o TITAN nem o PKG.
 
 Execute de novo **sempre que instalar um jogo pelo TITAN**. A reconstrução forçada da cache pelo TITAN preserva os arquivos copiados. Se a cache de um jogo for recriada do zero (por exemplo, se a pasta for apagada), basta rodar o payload outra vez.
 
+#### PS5 Payload Manager
+
+Em **Settings → Manage Sources → Add Source**, adicione:
+
+```
+https://raw.githubusercontent.com/tarcizu/titan-trophy-fix/main/payloads.json
+```
+
+O payload passa a aparecer no catálogo com o ícone e pode ser instalado e atualizado por lá.
+
 #### Prospero Manager
 
-Em **Payloads → Catálogo**, adicione a fonte `https://github.com/tarcizu/titan-trophy-fix`. O Prospero Manager lista as versões publicadas em [Releases](https://github.com/tarcizu/titan-trophy-fix/releases) e baixa o `.elf` direto no console.
+Em **Payload Repositories → Add repository**, adicione `https://github.com/tarcizu/titan-trophy-fix`. O Prospero Manager lista as versões publicadas em [Releases](https://github.com/tarcizu/titan-trophy-fix/releases) e baixa o `.elf` direto no console.
 
 ### Compilar
 

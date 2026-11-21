@@ -1,0 +1,21 @@
+{
+  "name": "TITAN Trophy Fix",
+  "icons_url": "icons.json",
+  "payloads": [
+    {
+      "id": "titan-trophy-fix",
+      "name": "TITAN Trophy Fix",
+      "filename": "titan_trophy_fix_v1.0.elf",
+      "url": "https://github.com/tarcizu/titan-trophy-fix/releases/download/v1.0/titan_trophy_fix_v1.0.elf",
+      "description": "Makes trophies work for games installed as PKG by TITAN CORE",
+      "version": "v1.0",
+      "last_update": "2026-11-21",
+      "category": "Utilities & Tools",
+      "checksum": "79bf38681f8b7d66ad22483ede92ec67ce644df59dcadb88be1e29b713a9ab02",
+      "author": "tarcizu",
+      "icon_key": "titan-trophy-fix",
+      "source": "https://github.com/tarcizu/titan-trophy-fix/releases",
+      "details_url": "https://raw.githubusercontent.com/tarcizu/titan-trophy-fix/main/README.md"
+    }
+  ]
+}
